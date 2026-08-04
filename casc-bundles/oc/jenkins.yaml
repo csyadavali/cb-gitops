@@ -120,6 +120,7 @@ cloudbees-monitoring: {
   }
 advisor:
   acceptToS: true
+  email: "c_syadavali@cloudbees.com"
 beekeeper:
   enabled: true
   securityWarnings:
