@@ -1,2 +1,4 @@
 removeStrategy:
   rbac: SYNC
+groups: []
+roles: []
