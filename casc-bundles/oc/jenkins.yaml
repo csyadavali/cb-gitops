@@ -1,0 +1,386 @@
+configuration-as-code: {
+  }
+credentials:
+  folder: {
+    }
+  providerImpl: {
+    }
+  system:
+    domainCredentials:
+    - credentials:
+      - usernamePassword:
+          id: "dockerhub-creds"
+          password: "${DOCKERHUB_CREDS_PASSWORD}"
+          scope: GLOBAL
+          username: "sekharyr"
+      domain: {
+        }
+  user: {
+    }
+jenkins:
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+  crumbIssuer: "standard"
+  disableRememberMe: false
+  disabledAdministrativeMonitors:
+  - "com.cloudbees.opscenter.server.security.SharedCredentialsAdminMonitor"
+  - "com.cloudbees.masterprovisioning.kubernetes.PSSMonitorTrigger$PSSDisabledAdminMonitor"
+  - "jenkins.diagnostics.ControllerExecutorsNoAgents"
+  - "jenkins.security.csp.impl.CspRecommendation"
+  - "hudson.diagnosis.ReverseProxySetupMonitor"
+  labelAtoms:
+  - name: "built-in"
+  log: {
+    }
+  markupFormatter: "plainText"
+  mode: NORMAL
+  noUsageStatistics: true
+  nodeMonitors:
+  - "architecture"
+  - "clock"
+  - diskSpace:
+      freeSpaceThreshold: "1GiB"
+      freeSpaceWarningThreshold: "2GiB"
+  - "swapSpace"
+  - tmpSpace:
+      freeSpaceThreshold: "1GiB"
+      freeSpaceWarningThreshold: "2GiB"
+  - "responseTime"
+  numExecutors: 2
+  primaryView:
+    masters:
+      columns:
+      - "status"
+      - "weather"
+      - "jobName"
+      - "manageMaster"
+      - "masterPodStatusViewColumn"
+      - "masterConfigurationStaleViewColumn"
+      - "totalJobsViewColumn"
+      - "queueSizeViewColumn"
+      - "jenkinsVersionViewColumn"
+      - "listSelectionColumn"
+      jobFilters:
+      - "connectedMasterViewFilter"
+      name: "Controllers"
+      recurse: true
+  projectNamingStrategy: "standard"
+  quietPeriod: 5
+  remotingSecurity:
+    enabled: true
+  scmCheckoutRetryCount: 0
+  securityRealm:
+    local:
+      allowsSignup: false
+      enableCaptcha: false
+      users:
+      - id: "syadavali"
+        name: "Sekhar"
+        properties:
+        - "consoleUrlProvider"
+        - "viewsTabBar"
+        - myView:
+            viewsTabBar: "standard"
+        - preferredProvider:
+            providerId: "default"
+        - "timezone"
+        - "experimentalFlags"
+        - mailer:
+            emailAddress: "sekhar.yadavali@terralogic.com"
+        - "apiToken"
+  slaveAgentPort: 50000
+  updateCenter:
+    sites:
+    - id: "core-oc-offline"
+      url: "file:/tmp/jenkins/war/WEB-INF/plugins/update-center.json"
+    - id: "cap-core-oc"
+      url: "https://jenkins-updates.cloudbees.com/update-center/envelope-core-oc/update-center.json"
+  views:
+  - masters:
+      columns:
+      - "status"
+      - "weather"
+      - "jobName"
+      - "manageMaster"
+      - "masterPodStatusViewColumn"
+      - "masterConfigurationStaleViewColumn"
+      - "totalJobsViewColumn"
+      - "queueSizeViewColumn"
+      - "jenkinsVersionViewColumn"
+      - "listSelectionColumn"
+      jobFilters:
+      - "connectedMasterViewFilter"
+      name: "Controllers"
+      recurse: true
+  - all:
+      name: "all"
+  viewsTabBar: "standard"
+cloudbees-monitoring: {
+  }
+advisor: {
+  }
+beekeeper:
+  enabled: true
+  securityWarnings:
+    enabledForCore: true
+    enabledForPlugins: true
+  upgrades:
+    autoDowngradePlugins: false
+    autoUpgradePlugins: true
+cloudBeesCasCServer:
+  disableRemoteValidation: false
+  visibility: false
+controllerLifecycleNotifications:
+  authenticator: "none"
+  enabled: false
+  ignoreTlsConnectionErrors: false
+license:
+  certificate: "${CJOC_LICENSE_CERT}"
+  key: "${CJOC_LICENSE_KEY}"
+masterprovisioning:
+  dockerImageDefinitionConfiguration:
+    images:
+    - imageTag: "cloudbees/cloudbees-core-mm:2.555.3.36985"
+      name: "CloudBees CI - Managed Controller - 2.555.3.36985"
+  kubernetes:
+    clusterEndpoints:
+    - id: "default"
+      jenkinsUrl: "http://cjoc.cloudbees-core.svc.cluster.local/"
+      name: "kubernetes"
+      serviceExposure:
+        gateway:
+          gatewayName: "cloudbees-gateway"
+          gatewayNamespace: "cloudbees-core"
+    cpus: "1.0"
+    disk: 50
+    fsGroup: "1000"
+    globalJavaOptions: "-Dorg.csanchez.jenkins.plugins.kubernetes.pipeline.PodTemplateStepExecution.defaultImage=cloudbees/cloudbees-core-agent:2.555.3.36985\
+      \ -Dcom.cloudbees.jenkins.plugins.kube.ServiceAccountFilter.defaultServiceAccount=jenkins-agents\
+      \ -Dcom.cloudbees.networking.useSubdomain=true -Dcom.cloudbees.networking.protocol=\"\
+      https\" -Dcom.cloudbees.networking.hostname=\"aws.syadavali.ps.beescloud.com\"\
+      \ -Dcom.cloudbees.networking.port=443 -Dcom.cloudbees.networking.operationsCenterName=\"\
+      cjoc\""
+    javaOptions: "-XshowSettings:vm -XX:+AlwaysPreTouch -XX:+DisableExplicitGC -XX:+ParallelRefProcEnabled\
+      \ -XX:+UseStringDeduplication -XX:+AlwaysActAsServerClassMachine -Dhudson.slaves.NodeProvisioner.initialDelay=0\
+      \ -XX:-OmitStackTraceInFastThrow"
+    livenessInitialDelaySeconds: 0
+    livenessPeriodSeconds: 10
+    livenessTimeoutSeconds: 10
+    memory: 3072
+    readinessFailureThreshold: 3
+    readinessInitialDelaySeconds: 0
+    readinessTimeoutSeconds: 5
+    startupFailureThreshold: 100
+    startupInitialDelaySeconds: 30
+    startupPeriodSeconds: 10
+    startupTimeoutSeconds: 5
+    terminationGracePeriodSeconds: 30
+kube:
+  podTemplatesConfiguration: {
+    }
+support:
+  automatedBundleConfiguration:
+    componentIds:
+    - "SegmentClientEventsComponent"
+    - "CloudBeesAssuranceSupport"
+    - "CascScmRetrieverSupport"
+    - "CloudBeesCasCUpdateLogBundlesSupport"
+    - "AgentsConfigFile"
+    - "ConfigFileComponent"
+    - "OtherConfigFilesComponent"
+    - "AboutBrowser"
+    - "AboutJenkins"
+    - "AboutUser"
+    - "AdministrativeMonitors"
+    - "BuildQueue"
+    - "CustomLogs"
+    - "DumpExportTable"
+    - "EnvironmentVariables"
+    - "FileDescriptorLimit"
+    - "GCLogs"
+    - "HeapUsageHistogram"
+    - "ItemsContent"
+    - "AgentsJVMProcessSystemMetricsContents"
+    - "MasterJVMProcessSystemMetricsContents"
+    - "JenkinsLogs"
+    - "LoadStats"
+    - "LoggerManager"
+    - "Metrics"
+    - "NetworkInterfaces"
+    - "NodeExecutors"
+    - "NodeMonitors"
+    - "OtherLogs"
+    - "ProxyConfiguration"
+    - "ReverseProxy"
+    - "RootCAs"
+    - "RunningBuilds"
+    - "SlaveCommandStatistics"
+    - "SlaveLaunchLogs"
+    - "SlaveLogs"
+    - "AgentsSystemConfiguration"
+    - "MasterSystemConfiguration"
+    - "SystemProperties"
+    - "TaskLogs"
+    - "ThreadDumps"
+    - "UpdateCenter"
+    - "UserCount"
+    - "ComponentImpl"
+    - "SlowRequestComponent"
+    - "SlowRequestThreadDumpsComponent"
+    - "ShutdownComponent"
+    - "StartupComponent"
+    - "HighLoadComponent"
+    - "DeadlockRequestComponent"
+    - "KubernetesMasterLogs"
+    - "KubernetesMasterManifests"
+    - "KubernetesServiceExposure"
+    - "ConnectedMasterSupportComponent"
+    - "UserActivityComponent"
+    enabled: true
+    period: 1
+globalCredentialsConfiguration:
+  configuration:
+    providerFilter: "none"
+    typeFilter: "none"
+appearance:
+  consoleUrlProvider: {
+    }
+  prism:
+    theme: PRISM
+security:
+  anonymizeSupportBundle:
+    enabled: false
+  apiToken:
+    creationOfLegacyTokenEnabled: false
+    tokenGenerationOnCreationEnabled: false
+    usageStatisticsEnabled: true
+  contentSecurityPolicy:
+    enforce: false
+  controllerExecutorCount: {
+    }
+  crumb: {
+    }
+  operationsCenterCertificates: {
+    }
+  prism:
+    protectSourceCodeByPermission: false
+  queueItemAuthenticator: {
+    }
+  scriptApproval:
+    forceSandbox: false
+  securitySettingsEnforcement:
+    global:
+      realmAndAuthorization:
+        canCustomMapping: false
+        canOverride: false
+        defaultMappingFactory: "restrictedEquivalentRAMF"
+unclassified:
+  administrativeMonitorsConfiguration: {
+    }
+  alerter: {
+    }
+  artifactManager: {
+    }
+  buildDiscarders:
+    configuredBuildDiscarders:
+    - "jobBuildDiscarder"
+  bundleStorageService:
+    activated: false
+    checkOutTimeout: 600
+    pollingPeriod: 120
+    purgeOnDeactivation: false
+  bundleUpdateTiming:
+    automaticReload: false
+    automaticRestart: false
+    rejectWarnings: false
+    reloadAlwaysOnRestart: false
+    skipNewVersions: false
+  casCGlobalConfig: {
+    }
+  cascAutoControllerProvisioning:
+    duration: 60
+    fireAndForget: true
+    initialDelay: 15
+    provisionControllerOnCreation: false
+    timeout: 600
+  cascItemsConfiguration:
+    variableInterpolationEnabledForAdmin: false
+    variableInterpolationEnabledForNonAdmin: false
+  cloudbeesPlatform: {
+    }
+  computerRetentionCheckInterval: {
+    }
+  configuration: {
+    }
+  defaultDisplayUrlProvider: {
+    }
+  defaultFolderConfiguration: {
+    }
+  defaultView: {
+    }
+  envVarsFilter: {
+    }
+  experimentalPlugins:
+    enabled: false
+  fingerprints:
+    fingerprintCleanupDisabled: false
+    storage: "file"
+  globalConfigurationImpl: {
+    }
+  globalDefaultFlowDurabilityLevel: {
+    }
+  headerLabel: {
+    }
+  headerSupportRequestLink: {
+    }
+  location:
+    adminAddress: "address not configured yet <nobody@nowhere>"
+    url: "https://cjoc.aws.syadavali.ps.beescloud.com/"
+  mailer:
+    charset: "UTF-8"
+    useSsl: false
+    useTls: false
+  managedMastersByDomain: {
+    }
+  metricsAccessKey: {
+    }
+  myView: {
+    }
+  nodeProperties: {
+    }
+  operationsCenterSharedConfiguration:
+    enabled: false
+  plugin: {
+    }
+  pollSCM:
+    pollingThreadCount: 10
+  projectNamingStrategy: {
+    }
+  provisioningLimitConfiguration: {
+    }
+  proxyConfigurationManager: {
+    }
+  quietPeriod: {
+    }
+  resourceRoot: {
+    }
+  scmRetryCount: {
+    }
+  shell: {
+    }
+  usageStatistics: {
+    }
+  usageStatisticsCloudBees:
+    disabledJenkinsUsageStatistics: true
+    usageStatisticsCollected: true
+  validationVisualization:
+    quiet: false
+  viewsTabBar: {
+    }
+tool:
+  cloudbeesPluginUsageAnalyzer:
+    enabled: true
+  mavenGlobalConfig:
+    globalSettingsProvider: "standard"
+    settingsProvider: "standard"

@@ -1,0 +1,12 @@
+apiVersion: "1"
+id: "cjoc-bundle"
+description: "CJOC operations center configuration (cbci-demo-cone)"
+version: "1"
+jcasc:
+  - "jenkins.yaml"
+plugins:
+  - "plugins.yaml"
+rbac:
+  - "rbac.yaml"
+items:
+  - "items.yaml"

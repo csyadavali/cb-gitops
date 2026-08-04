@@ -1,0 +1,182 @@
+removeStrategy:
+  rbac: SYNC
+  items: NONE
+items:
+- kind: managedController
+  name: mc-ebs
+  configuration:
+    kubernetes:
+      allowExternalAgents: false
+      terminationGracePeriodSeconds: 30
+      image: CloudBees CI - Managed Controller - 2.555.3.36985
+      memory: 4000
+      startupPeriodSeconds: 10
+      fsGroup: '1000'
+      cpus: 2.0
+      readinessTimeoutSeconds: 5
+      startupFailureThreshold: 100
+      livenessInitialDelaySeconds: 0
+      readinessInitialDelaySeconds: 0
+      clusterEndpointId: default
+      disk: 80
+      readinessFailureThreshold: 3
+      livenessTimeoutSeconds: 10
+      storageClassName: ebs-gp3-sc
+      domain: mc-ebs
+      livenessPeriodSeconds: 10
+      startupTimeoutSeconds: 5
+      startupInitialDelaySeconds: 30
+      javaOptions: -XshowSettings:vm -XX:+AlwaysPreTouch -XX:+DisableExplicitGC -XX:+ParallelRefProcEnabled
+        -XX:+UseStringDeduplication -XX:+AlwaysActAsServerClassMachine -Dhudson.slaves.NodeProvisioner.initialDelay=0
+        -XX:-OmitStackTraceInFastThrow
+  description: ''
+  displayName: Controller On EBS
+  properties:
+  - customWebhookData: {}
+  - sharedHeaderLabelOptIn:
+      optIn: true
+  - healthReporting:
+      enabled: true
+  - owner:
+      delay: 5
+      owners: ''
+  - envelopeExtension:
+      allowExceptions: false
+  - sharedConfigurationOptOut:
+      optOut: false
+- kind: managedController
+  name: mc-efs
+  configuration:
+    kubernetes:
+      allowExternalAgents: false
+      terminationGracePeriodSeconds: 30
+      image: CloudBees CI - Managed Controller - 2.555.3.36985
+      memory: 4000
+      startupPeriodSeconds: 10
+      fsGroup: '1000'
+      cpus: 2.0
+      readinessTimeoutSeconds: 5
+      startupFailureThreshold: 100
+      livenessInitialDelaySeconds: 0
+      readinessInitialDelaySeconds: 0
+      clusterEndpointId: default
+      disk: 50
+      readinessFailureThreshold: 3
+      livenessTimeoutSeconds: 10
+      storageClassName: efs-sc
+      domain: mc-efs
+      livenessPeriodSeconds: 10
+      startupTimeoutSeconds: 5
+      startupInitialDelaySeconds: 30
+      javaOptions: -XshowSettings:vm -XX:+AlwaysPreTouch -XX:+DisableExplicitGC -XX:+ParallelRefProcEnabled
+        -XX:+UseStringDeduplication -XX:+AlwaysActAsServerClassMachine -Dhudson.slaves.NodeProvisioner.initialDelay=0
+        -XX:-OmitStackTraceInFastThrow
+  description: ''
+  displayName: mc-efs
+  properties:
+  - customWebhookData: {}
+  - sharedHeaderLabelOptIn:
+      optIn: true
+  - healthReporting:
+      enabled: true
+  - owner:
+      delay: 5
+      owners: ''
+  - envelopeExtension:
+      allowExceptions: false
+  - sharedConfigurationOptOut:
+      optOut: false
+- kind: managedController
+  name: mc-fsx-ha
+  configuration:
+    kubernetes:
+      allowExternalAgents: false
+      replication:
+        config:
+          maxReplicas: 0
+          replicas: 1
+          targetCPUUtilizationPercentage: 80
+      terminationGracePeriodSeconds: 30
+      image: CloudBees CI - Managed Controller - 2.555.3.36985
+      memory: 4000
+      startupPeriodSeconds: 10
+      fsGroup: '1000'
+      cpus: 2.0
+      readinessTimeoutSeconds: 5
+      startupFailureThreshold: 100
+      livenessInitialDelaySeconds: 0
+      readinessInitialDelaySeconds: 0
+      clusterEndpointId: default
+      disk: 1
+      readinessFailureThreshold: 3
+      livenessTimeoutSeconds: 10
+      storageClassName: openzfs-ha-sc
+      domain: mc-fsx-ha
+      livenessPeriodSeconds: 10
+      startupTimeoutSeconds: 5
+      startupInitialDelaySeconds: 30
+      javaOptions: -XshowSettings:vm -XX:+AlwaysPreTouch -XX:+DisableExplicitGC -XX:+ParallelRefProcEnabled
+        -XX:+UseStringDeduplication -XX:+AlwaysActAsServerClassMachine -Dhudson.slaves.NodeProvisioner.initialDelay=0
+        -XX:-OmitStackTraceInFastThrow
+  description: ''
+  displayName: mc-fsx-ha
+  properties:
+  - customWebhookData: {}
+  - sharedHeaderLabelOptIn:
+      optIn: true
+  - healthReporting:
+      enabled: true
+  - owner:
+      delay: 5
+      owners: ''
+  - envelopeExtension:
+      allowExceptions: false
+  - sharedConfigurationOptOut:
+      optOut: false
+- kind: managedController
+  name: mc-fsx3
+  configuration:
+    kubernetes:
+      allowExternalAgents: false
+      replication:
+        config:
+          maxReplicas: 0
+          replicas: 1
+          targetCPUUtilizationPercentage: 80
+      terminationGracePeriodSeconds: 30
+      image: CloudBees CI - Managed Controller - 2.555.3.36985
+      memory: 3072
+      startupPeriodSeconds: 10
+      fsGroup: '1000'
+      cpus: 1.0
+      readinessTimeoutSeconds: 5
+      startupFailureThreshold: 100
+      livenessInitialDelaySeconds: 0
+      readinessInitialDelaySeconds: 0
+      clusterEndpointId: default
+      disk: 1
+      readinessFailureThreshold: 3
+      livenessTimeoutSeconds: 10
+      storageClassName: openzfs-sc
+      domain: mc-fsx3
+      livenessPeriodSeconds: 10
+      startupTimeoutSeconds: 5
+      startupInitialDelaySeconds: 30
+      javaOptions: -XshowSettings:vm -XX:+AlwaysPreTouch -XX:+DisableExplicitGC -XX:+ParallelRefProcEnabled
+        -XX:+UseStringDeduplication -XX:+AlwaysActAsServerClassMachine -Dhudson.slaves.NodeProvisioner.initialDelay=0
+        -XX:-OmitStackTraceInFastThrow
+  description: ''
+  displayName: mc-fsx3
+  properties:
+  - customWebhookData: {}
+  - sharedHeaderLabelOptIn:
+      optIn: true
+  - healthReporting:
+      enabled: true
+  - owner:
+      delay: 5
+      owners: ''
+  - envelopeExtension:
+      allowExceptions: false
+  - sharedConfigurationOptOut:
+      optOut: false
