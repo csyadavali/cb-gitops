@@ -44,6 +44,8 @@ items:
       allowExceptions: false
   - sharedConfigurationOptOut:
       optOut: false
+  - configurationAsCode:
+      cascBundleServiceBundle: Y2ItZ2l0b3BzLWNvbm5lY3RvcjptYy1lYnM=
 - kind: managedController
   name: mc-efs
   configuration:
