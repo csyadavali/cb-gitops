@@ -118,8 +118,8 @@ jenkins:
   viewsTabBar: "standard"
 cloudbees-monitoring: {
   }
-advisor: {
-  }
+advisor:
+  acceptToS: true
 beekeeper:
   enabled: true
   securityWarnings:
