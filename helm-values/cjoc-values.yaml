@@ -1,0 +1,15 @@
+OperationsCenter:
+  CasC:
+    Enabled: true
+    Retriever:
+      Enabled: true
+      scmRepo: https://github.com/csyadavali/cb-gitops.git
+      scmBranch: main
+      scmBundlePath: casc-bundles/oc
+  ContainerEnvFrom:
+    - secretRef:
+        name: cjoc-casc-secrets
+
+CascBundleService:
+  enabled: true
+  createConfig: true
