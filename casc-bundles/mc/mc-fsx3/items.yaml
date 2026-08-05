@@ -1,0 +1,492 @@
+removeStrategy:
+  rbac: SYNC
+  items: NONE
+items:
+- kind: pipeline
+  name: bench-target-openzfs-sc-MAX_SURVIVABILITY-1
+  concurrentBuild: true
+  definition:
+    cpsScmFlowDefinition:
+      scriptPath: Jenkinsfile.target
+      scm:
+        scmGit:
+          gitTool: Default
+          userRemoteConfigs:
+          - userRemoteConfig:
+              url: https://github.com/sekharyr/cjoc-storage-benchmark
+          branches:
+          - branchSpec:
+              name: '*/main'
+      lightweight: false
+  description: ''
+  disabled: false
+  displayName: bench-target-openzfs-sc-MAX_SURVIVABILITY-1
+  properties:
+  - durabilityHint:
+      hint: MAX_SURVIVABILITY
+  - parameters:
+      parameterDefinitions:
+      - string:
+          trim: false
+          name: UNIQUE_STAMP
+          description: Unique value baked into this build's one artifact — supplied
+            by benchDriver, not meant to be set by hand
+      - booleanParam:
+          defaultValue: false
+          name: REALISTIC_SERVICE_MODE
+          description: 'Off (default) = minimal per-build work: produce one uniquely-stamped,
+            fingerprinted artifact (the controller-side small-file storage signal).
+            On = also run the full unit-test/integration-test/log-flood/docker/soak/CloudWatch
+            sequence — the "does this storage choice bottleneck a real build" question.
+            Heavier on the agent AND controller (log flood streams to the controller);
+            defaults off for controller-memory safety.'
+      - string:
+          trim: false
+          defaultValue: openzfs-sc
+          name: STORAGE_CLASS
+          description: Informational label + selects the CloudWatch resource ID (see
+            the map in vars/benchStages.groovy). Should match the controller this
+            target job runs on — benchDriver passes it through from the orchestrator.
+            Only used in realistic mode.
+      - string:
+          trim: false
+          defaultValue: '1'
+          name: CONCURRENCY
+          description: Parallel build branches inside one build (realistic mode only).
+            Keep low — log flood + integration-test output scale with this and stream
+            to the controller.
+      - booleanParam:
+          defaultValue: true
+          name: COLD_CACHE
+          description: Wipe workspace + Maven cache before building (realistic mode
+            only)
+      - string:
+          trim: false
+          defaultValue: sekharyr/cjoc-storage-benchmark
+          name: DOCKERHUB_REPO
+          description: Docker Hub repo (namespace/name) to tag and push the built
+            workload image to (realistic mode only)
+      - booleanParam:
+          defaultValue: false
+          name: TRIVY_HARD_FAIL
+          description: Fail on Trivy-detected vulnerabilities instead of only reporting
+            them (realistic mode only)
+      - string:
+          trim: false
+          defaultValue: CRITICAL,HIGH
+          name: TRIVY_SEVERITY
+          description: Severities Trivy hard-fails on when TRIVY_HARD_FAIL is true
+      - string:
+          trim: false
+          defaultValue: '50'
+          name: LOG_FLOOD_SIZE_MB
+          description: MB of log-shaped console output each Log flood branch writes
+            (realistic mode only). Streams to the controller, so total ~= CONCURRENCY
+            x this — keep modest for controller-memory safety.
+      - string:
+          trim: false
+          name: STORAGE_RESOURCE_ID
+          description: AWS resource ID backing this controller's JENKINS_HOME PVC
+            for CloudWatch collection; blank = auto-select from STORAGE_CLASS. Only
+            used in realistic mode.
+      - string:
+          trim: false
+          defaultValue: '1'
+          name: INTEGRATION_TEST_REPEAT
+          description: Re-run the real mvnw verify this many times per branch (realistic
+            mode only) — genuine Maven console output as controller log pressure
+      - string:
+          trim: false
+          defaultValue: '1'
+          name: ARTIFACT_COPY_COUNT
+          description: Archive this many copies of the built jar per branch (realistic
+            mode only) — real binary writes that ACCUMULATE on JENKINS_HOME across
+            builds
+  - buildDiscarder:
+      strategy:
+        logRotator:
+          removeLastBuild: false
+          artifactDaysToKeep: -1
+          artifactNumToKeep: -1
+          daysToKeep: -1
+          numToKeep: 5
+  - parameters:
+      parameterDefinitions:
+      - string:
+          trim: false
+          name: UNIQUE_STAMP
+          description: Unique value baked into this build's one artifact — supplied
+            by benchDriver, not meant to be set by hand
+      - booleanParam:
+          defaultValue: false
+          name: REALISTIC_SERVICE_MODE
+          description: 'Off (default) = minimal per-build work: produce one uniquely-stamped,
+            fingerprinted artifact (the controller-side small-file storage signal).
+            On = also run the full unit-test/integration-test/log-flood/docker/soak/CloudWatch
+            sequence — the "does this storage choice bottleneck a real build" question.
+            Heavier on the agent AND controller (log flood streams to the controller);
+            defaults off for controller-memory safety.'
+      - string:
+          trim: false
+          defaultValue: openzfs-sc
+          name: STORAGE_CLASS
+          description: Informational label + selects the CloudWatch resource ID (see
+            the map in vars/benchStages.groovy). Should match the controller this
+            target job runs on — benchDriver passes it through from the orchestrator.
+            Only used in realistic mode.
+      - string:
+          trim: false
+          defaultValue: '1'
+          name: CONCURRENCY
+          description: Parallel build branches inside one build (realistic mode only).
+            Keep low — log flood + integration-test output scale with this and stream
+            to the controller.
+      - booleanParam:
+          defaultValue: true
+          name: COLD_CACHE
+          description: Wipe workspace + Maven cache before building (realistic mode
+            only)
+      - string:
+          trim: false
+          defaultValue: sekharyr/cjoc-storage-benchmark
+          name: DOCKERHUB_REPO
+          description: Docker Hub repo (namespace/name) to tag and push the built
+            workload image to (realistic mode only)
+      - booleanParam:
+          defaultValue: false
+          name: TRIVY_HARD_FAIL
+          description: Fail on Trivy-detected vulnerabilities instead of only reporting
+            them (realistic mode only)
+      - string:
+          trim: false
+          defaultValue: CRITICAL,HIGH
+          name: TRIVY_SEVERITY
+          description: Severities Trivy hard-fails on when TRIVY_HARD_FAIL is true
+      - string:
+          trim: false
+          defaultValue: '50'
+          name: LOG_FLOOD_SIZE_MB
+          description: MB of log-shaped console output each Log flood branch writes
+            (realistic mode only). Streams to the controller, so total ~= CONCURRENCY
+            x this — keep modest for controller-memory safety.
+      - string:
+          trim: false
+          name: STORAGE_RESOURCE_ID
+          description: AWS resource ID backing this controller's JENKINS_HOME PVC
+            for CloudWatch collection; blank = auto-select from STORAGE_CLASS. Only
+            used in realistic mode.
+      - string:
+          trim: false
+          defaultValue: '1'
+          name: INTEGRATION_TEST_REPEAT
+          description: Re-run the real mvnw verify this many times per branch (realistic
+            mode only) — genuine Maven console output as controller log pressure
+      - string:
+          trim: false
+          defaultValue: '1'
+          name: ARTIFACT_COPY_COUNT
+          description: Archive this many copies of the built jar per branch (realistic
+            mode only) — real binary writes that ACCUMULATE on JENKINS_HOME across
+            builds
+  - buildDiscarder:
+      strategy:
+        logRotator:
+          removeLastBuild: false
+          artifactDaysToKeep: -1
+          artifactNumToKeep: -1
+          daysToKeep: -1
+          numToKeep: 5
+  resumeBlocked: false
+- kind: pipeline
+  name: bench-target-openzfs-sc-MAX_SURVIVABILITY-2
+  concurrentBuild: true
+  definition:
+    cpsScmFlowDefinition:
+      scriptPath: Jenkinsfile.target
+      scm:
+        scmGit:
+          gitTool: Default
+          userRemoteConfigs:
+          - userRemoteConfig:
+              url: https://github.com/sekharyr/cjoc-storage-benchmark
+          branches:
+          - branchSpec:
+              name: '*/main'
+      lightweight: false
+  description: ''
+  disabled: false
+  displayName: bench-target-openzfs-sc-MAX_SURVIVABILITY-2
+  properties:
+  - durabilityHint:
+      hint: MAX_SURVIVABILITY
+  - parameters:
+      parameterDefinitions:
+      - string:
+          trim: false
+          name: UNIQUE_STAMP
+          description: Unique value baked into this build's one artifact — supplied
+            by benchDriver, not meant to be set by hand
+      - booleanParam:
+          defaultValue: false
+          name: REALISTIC_SERVICE_MODE
+          description: 'Off (default) = minimal per-build work: produce one uniquely-stamped,
+            fingerprinted artifact (the controller-side small-file storage signal).
+            On = also run the full unit-test/integration-test/log-flood/docker/soak/CloudWatch
+            sequence — the "does this storage choice bottleneck a real build" question.
+            Heavier on the agent AND controller (log flood streams to the controller);
+            defaults off for controller-memory safety.'
+      - string:
+          trim: false
+          defaultValue: openzfs-sc
+          name: STORAGE_CLASS
+          description: Informational label + selects the CloudWatch resource ID (see
+            the map in vars/benchStages.groovy). Should match the controller this
+            target job runs on — benchDriver passes it through from the orchestrator.
+            Only used in realistic mode.
+      - string:
+          trim: false
+          defaultValue: '1'
+          name: CONCURRENCY
+          description: Parallel build branches inside one build (realistic mode only).
+            Keep low — log flood + integration-test output scale with this and stream
+            to the controller.
+      - booleanParam:
+          defaultValue: true
+          name: COLD_CACHE
+          description: Wipe workspace + Maven cache before building (realistic mode
+            only)
+      - string:
+          trim: false
+          defaultValue: sekharyr/cjoc-storage-benchmark
+          name: DOCKERHUB_REPO
+          description: Docker Hub repo (namespace/name) to tag and push the built
+            workload image to (realistic mode only)
+      - booleanParam:
+          defaultValue: false
+          name: TRIVY_HARD_FAIL
+          description: Fail on Trivy-detected vulnerabilities instead of only reporting
+            them (realistic mode only)
+      - string:
+          trim: false
+          defaultValue: CRITICAL,HIGH
+          name: TRIVY_SEVERITY
+          description: Severities Trivy hard-fails on when TRIVY_HARD_FAIL is true
+      - string:
+          trim: false
+          defaultValue: '50'
+          name: LOG_FLOOD_SIZE_MB
+          description: MB of log-shaped console output each Log flood branch writes
+            (realistic mode only). Streams to the controller, so total ~= CONCURRENCY
+            x this — keep modest for controller-memory safety.
+      - string:
+          trim: false
+          name: STORAGE_RESOURCE_ID
+          description: AWS resource ID backing this controller's JENKINS_HOME PVC
+            for CloudWatch collection; blank = auto-select from STORAGE_CLASS. Only
+            used in realistic mode.
+      - string:
+          trim: false
+          defaultValue: '1'
+          name: INTEGRATION_TEST_REPEAT
+          description: Re-run the real mvnw verify this many times per branch (realistic
+            mode only) — genuine Maven console output as controller log pressure
+      - string:
+          trim: false
+          defaultValue: '1'
+          name: ARTIFACT_COPY_COUNT
+          description: Archive this many copies of the built jar per branch (realistic
+            mode only) — real binary writes that ACCUMULATE on JENKINS_HOME across
+            builds
+  - buildDiscarder:
+      strategy:
+        logRotator:
+          removeLastBuild: false
+          artifactDaysToKeep: -1
+          artifactNumToKeep: -1
+          daysToKeep: -1
+          numToKeep: 5
+  - parameters:
+      parameterDefinitions:
+      - string:
+          trim: false
+          name: UNIQUE_STAMP
+          description: Unique value baked into this build's one artifact — supplied
+            by benchDriver, not meant to be set by hand
+      - booleanParam:
+          defaultValue: false
+          name: REALISTIC_SERVICE_MODE
+          description: 'Off (default) = minimal per-build work: produce one uniquely-stamped,
+            fingerprinted artifact (the controller-side small-file storage signal).
+            On = also run the full unit-test/integration-test/log-flood/docker/soak/CloudWatch
+            sequence — the "does this storage choice bottleneck a real build" question.
+            Heavier on the agent AND controller (log flood streams to the controller);
+            defaults off for controller-memory safety.'
+      - string:
+          trim: false
+          defaultValue: openzfs-sc
+          name: STORAGE_CLASS
+          description: Informational label + selects the CloudWatch resource ID (see
+            the map in vars/benchStages.groovy). Should match the controller this
+            target job runs on — benchDriver passes it through from the orchestrator.
+            Only used in realistic mode.
+      - string:
+          trim: false
+          defaultValue: '1'
+          name: CONCURRENCY
+          description: Parallel build branches inside one build (realistic mode only).
+            Keep low — log flood + integration-test output scale with this and stream
+            to the controller.
+      - booleanParam:
+          defaultValue: true
+          name: COLD_CACHE
+          description: Wipe workspace + Maven cache before building (realistic mode
+            only)
+      - string:
+          trim: false
+          defaultValue: sekharyr/cjoc-storage-benchmark
+          name: DOCKERHUB_REPO
+          description: Docker Hub repo (namespace/name) to tag and push the built
+            workload image to (realistic mode only)
+      - booleanParam:
+          defaultValue: false
+          name: TRIVY_HARD_FAIL
+          description: Fail on Trivy-detected vulnerabilities instead of only reporting
+            them (realistic mode only)
+      - string:
+          trim: false
+          defaultValue: CRITICAL,HIGH
+          name: TRIVY_SEVERITY
+          description: Severities Trivy hard-fails on when TRIVY_HARD_FAIL is true
+      - string:
+          trim: false
+          defaultValue: '50'
+          name: LOG_FLOOD_SIZE_MB
+          description: MB of log-shaped console output each Log flood branch writes
+            (realistic mode only). Streams to the controller, so total ~= CONCURRENCY
+            x this — keep modest for controller-memory safety.
+      - string:
+          trim: false
+          name: STORAGE_RESOURCE_ID
+          description: AWS resource ID backing this controller's JENKINS_HOME PVC
+            for CloudWatch collection; blank = auto-select from STORAGE_CLASS. Only
+            used in realistic mode.
+      - string:
+          trim: false
+          defaultValue: '1'
+          name: INTEGRATION_TEST_REPEAT
+          description: Re-run the real mvnw verify this many times per branch (realistic
+            mode only) — genuine Maven console output as controller log pressure
+      - string:
+          trim: false
+          defaultValue: '1'
+          name: ARTIFACT_COPY_COUNT
+          description: Archive this many copies of the built jar per branch (realistic
+            mode only) — real binary writes that ACCUMULATE on JENKINS_HOME across
+            builds
+  - buildDiscarder:
+      strategy:
+        logRotator:
+          removeLastBuild: false
+          artifactDaysToKeep: -1
+          artifactNumToKeep: -1
+          daysToKeep: -1
+          numToKeep: 5
+  resumeBlocked: false
+- kind: pipeline
+  name: FSXPipeline
+  concurrentBuild: true
+  definition:
+    cpsScmFlowDefinition:
+      scriptPath: Jenkinsfile.orchestrator
+      scm:
+        scmGit:
+          userRemoteConfigs:
+          - userRemoteConfig:
+              url: https://github.com/sekharyr/cjoc-storage-benchmark/
+          branches:
+          - branchSpec:
+              name: '*/main'
+      lightweight: true
+  description: ''
+  disabled: false
+  displayName: FSXPipeline
+  properties:
+  - githubProjectProperty:
+      displayName: ''
+      projectUrlStr: https://github.com/sekharyr/cjoc-storage-benchmark/
+  - pipelineTriggers:
+      triggers:
+      - githubPush: {}
+  - parameters:
+      parameterDefinitions:
+      - choice:
+          name: STORAGE_CLASS
+          description: Informational label only — this job must already be scheduled
+            onto the controller backed by this storage class
+          choices:
+          - ebs-gp3-sc
+          - efs-sc
+          - openzfs-sc
+          - openzfs-ha-sc
+      - string:
+          trim: false
+          defaultValue: '5'
+          name: JOB_COUNT
+          description: Number of target jobs to create/ensure exist (job-sprawl axis).
+            Conservative default — benchDriver fans out JOB_COUNT x BUILD_ITERATIONS
+            builds ALL AT ONCE (no throttle), and each concurrent build costs controller
+            heap. 5 x 2 = 10 concurrent is a safe starting point on a ~1.5GB-heap
+            controller; raise once you have confirmed headroom.
+      - string:
+          trim: false
+          defaultValue: '2'
+          name: BUILD_ITERATIONS
+          description: Number of times each target job gets triggered per run (build-frequency
+            axis). Kept low by default so the total concurrent fan-out (JOB_COUNT
+            x BUILD_ITERATIONS) does not overwhelm the controller — see JOB_COUNT
+            note.
+      - string:
+          trim: false
+          defaultValue: '5'
+          name: MAX_CONCURRENT
+          description: Hard cap on builds in flight at once — benchDriver drives the
+            JOB_COUNT x BUILD_ITERATIONS builds in sequential windows of this size,
+            so the controller never sees more than this many concurrent builds no
+            matter how high the counts go. Protects controller heap. Set >= JOB_COUNT
+            x BUILD_ITERATIONS to fan out all at once (old behaviour).
+      - booleanParam:
+          defaultValue: false
+          name: REALISTIC_SERVICE_MODE
+          description: Off (default) = each triggered target build does minimal controller-side
+            stamp work (the small-file storage signal; controller-memory-safe). On
+            = each target build runs the FULL realistic service sequence (unit/integration
+            test, log flood, docker build/trivy/push, soak, CloudWatch). Much heavier
+            on agents AND controller (log flood streams to the controller) — combine
+            with a low MAX_CONCURRENT.
+      - string:
+          trim: false
+          defaultValue: https://github.com/sekharyr/cjoc-storage-benchmark
+          name: REPO_URL
+          description: Repo containing Jenkinsfile.target for the target jobs
+      - string:
+          trim: false
+          defaultValue: main
+          name: REPO_BRANCH
+          description: Branch of REPO_URL the target jobs should check out
+      - string:
+          trim: false
+          name: STORAGE_RESOURCE_ID
+          description: The AWS resource ID backing this controller's JENKINS_HOME
+            PVC — used for CloudWatch collection, same convention as Jenkinsfile/Jenkinsfile.max-survivability
+  - durabilityHint:
+      hint: MAX_SURVIVABILITY
+  - buildDiscarder:
+      strategy:
+        logRotator:
+          removeLastBuild: false
+          artifactDaysToKeep: -1
+          artifactNumToKeep: -1
+          daysToKeep: -1
+          numToKeep: 5
+  resumeBlocked: false
+
