@@ -138,8 +138,6 @@ items:
   - configurationAsCode:
       cascBundleSource: OC_CASC
       bundle: mc-fsx-ha
-      bundleName: mc-fsx-ha
-      branchName: main
 - kind: managedController
   name: mc-fsx3
   configuration:
@@ -190,5 +188,3 @@ items:
   - configurationAsCode:
       cascBundleSource: OC_CASC
       bundle: mc-fsx3
-      bundleName: mc-fsx3
-      branchName: main
