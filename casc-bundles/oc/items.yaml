@@ -137,6 +137,7 @@ items:
       optOut: false
   - configurationAsCode:
       cascBundleSource: OC_CASC
+      bundle: mc-fsx-ha
       bundleName: mc-fsx-ha
       branchName: main
 - kind: managedController
@@ -188,5 +189,6 @@ items:
       optOut: false
   - configurationAsCode:
       cascBundleSource: OC_CASC
+      bundle: mc-fsx3
       bundleName: mc-fsx3
       branchName: main
