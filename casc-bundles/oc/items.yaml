@@ -51,6 +51,11 @@ items:
   configuration:
     kubernetes:
       allowExternalAgents: false
+      replication:
+        config:
+          maxReplicas: 0
+          replicas: 1
+          targetCPUUtilizationPercentage: 80
       terminationGracePeriodSeconds: 30
       image: CloudBees CI - Managed Controller - 2.555.3.36985
       memory: 4000
@@ -96,7 +101,7 @@ items:
       replication:
         config:
           maxReplicas: 0
-          replicas: 1
+          replicas: 0
           targetCPUUtilizationPercentage: 80
       terminationGracePeriodSeconds: 30
       image: CloudBees CI - Managed Controller - 2.555.3.36985
@@ -145,7 +150,7 @@ items:
       replication:
         config:
           maxReplicas: 0
-          replicas: 1
+          replicas: 0
           targetCPUUtilizationPercentage: 80
       terminationGracePeriodSeconds: 30
       image: CloudBees CI - Managed Controller - 2.555.3.36985
