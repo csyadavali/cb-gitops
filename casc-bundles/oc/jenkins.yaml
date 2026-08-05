@@ -287,10 +287,22 @@ unclassified:
     configuredBuildDiscarders:
     - "jobBuildDiscarder"
   bundleStorageService:
-    activated: false
+    activated: true
     checkOutTimeout: 600
     pollingPeriod: 120
     purgeOnDeactivation: false
+    activeBundle:
+      name: "cb-gitops-mc-bundles"
+      polling: true
+      retriever:
+        SCM:
+          defaultVersion: "main"
+          scmSource:
+            git:
+              id: "cb-gitops-mc-bundles-scm-source"
+              remote: "https://github.com/csyadavali/cb-gitops.git"
+              traits:
+              - "gitBranchDiscovery"
   bundleUpdateTiming:
     automaticReload: false
     automaticRestart: false
