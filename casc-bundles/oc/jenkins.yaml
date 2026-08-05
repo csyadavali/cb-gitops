@@ -131,7 +131,7 @@ beekeeper:
     autoUpgradePlugins: true
 cloudBeesCasCServer:
   disableRemoteValidation: false
-  visibility: false
+  visibility: true
 controllerLifecycleNotifications:
   authenticator: "none"
   enabled: false
