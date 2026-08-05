@@ -136,7 +136,7 @@ items:
   - sharedConfigurationOptOut:
       optOut: false
   - configurationAsCode:
-      bundle: mc-fsx-ha
+      bundle: main/mc-fsx-ha
 - kind: managedController
   name: mc-fsx3
   configuration:
@@ -185,4 +185,4 @@ items:
   - sharedConfigurationOptOut:
       optOut: false
   - configurationAsCode:
-      bundle: mc-fsx3
+      bundle: main/mc-fsx3
