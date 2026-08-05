@@ -93,6 +93,8 @@ items:
       allowExceptions: false
   - sharedConfigurationOptOut:
       optOut: false
+  - configurationAsCode:
+      bundle: main/mc-efs
 - kind: managedController
   name: mc-fsx-ha
   configuration:
