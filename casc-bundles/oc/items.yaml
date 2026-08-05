@@ -136,7 +136,6 @@ items:
   - sharedConfigurationOptOut:
       optOut: false
   - configurationAsCode:
-      cascBundleSource: OC_CASC
       bundle: mc-fsx-ha
 - kind: managedController
   name: mc-fsx3
@@ -186,5 +185,4 @@ items:
   - sharedConfigurationOptOut:
       optOut: false
   - configurationAsCode:
-      cascBundleSource: OC_CASC
       bundle: mc-fsx3
