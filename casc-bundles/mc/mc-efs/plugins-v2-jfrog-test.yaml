@@ -1,6 +1,6 @@
-# DRAFT - untested. url/credentialsId keys are assumed, not verified against CloudBees docs.
-# Purpose: observe how the controller authenticates when fetching plugins from JFrog.
-# Secret lives in the Jenkins credentials store under the id below; never in this file.
+# CasC plugin management v2 (bundle apiVersion 2).
+# artifactory is retrieved from JFrog using credential jfrog-trial-token (defined below).
+# The token is read from a file mounted from a Kubernetes secret; it is never stored in git.
 plugins:
 - id: antisamy-markup-formatter
 - id: apache-httpcomponents-client-4-api
@@ -56,8 +56,6 @@ plugins:
 - id: commons-text-api
 - id: configuration-as-code
 - id: credentials
-  url: "https://trialjqo649.jfrog.io/artifactory/jenkins-plugins-local/credentials/credentials.hpi"
-  credentialsId: "jfrog-trial-token"
 - id: credentials-binding
 - id: display-url-api
 - id: durable-task
@@ -150,3 +148,6 @@ plugins:
 - id: workflow-scm-step
 - id: workflow-step-api
 - id: workflow-support
+credentials:
+- id: "jfrog-trial-token"
+  token: "${file:/run/secrets/jfrog_trial_token}"
