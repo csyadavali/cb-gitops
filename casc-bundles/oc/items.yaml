@@ -78,6 +78,22 @@ items:
       javaOptions: -XshowSettings:vm -XX:+AlwaysPreTouch -XX:+DisableExplicitGC -XX:+ParallelRefProcEnabled
         -XX:+UseStringDeduplication -XX:+AlwaysActAsServerClassMachine -Dhudson.slaves.NodeProvisioner.initialDelay=0
         -XX:-OmitStackTraceInFastThrow
+      yaml: |
+        kind: Deployment
+        spec:
+          template:
+            spec:
+              containers:
+              - name: jenkins
+                volumeMounts:
+                - name: jfrog-trial-token
+                  mountPath: /run/secrets/jfrog_trial_token
+                  subPath: jfrog_trial_token
+                  readOnly: true
+              volumes:
+              - name: jfrog-trial-token
+                secret:
+                  secretName: jfrog-trial-token
   description: ''
   displayName: mc-efs
   properties:
