@@ -9,7 +9,13 @@ credentials:
     }
   system:
     domainCredentials:
-    - domain: {
+    - credentials:
+      - string:
+          description: "JFrog trial token (value from mounted secret)"
+          id: "jfrog-trial-token"
+          scope: SYSTEM
+          secret: "${jfrog_trial_token}"
+      domain: {
         }
   user: {
     }
