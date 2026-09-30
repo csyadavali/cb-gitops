@@ -1,7 +1,7 @@
-apiVersion: "1"
+apiVersion: "2"
 id: "mc-efs"
 description: "mc-efs managed controller configuration (cbci-demo-cone)"
-version: "2"
+version: "3"
 jcasc:
   - "jenkins.yaml"
 plugins:
