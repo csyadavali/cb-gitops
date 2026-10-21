@@ -1,12 +1,12 @@
 # CasC plugin management v2 (bundle apiVersion 2).
-# artifactory is retrieved from JFrog using credential jfrog-trial-token (defined below).
-# The token is read from a file mounted from a Kubernetes secret; it is never stored in git.
+# Non-CAP plugins are listed as plain ids; their versions and all transitive dependencies are resolved
+# automatically and downloaded through uc-test-proxy -> JFrog mirror (the proxy URLs are set as JVM
+# properties on this controller in the OC bundle: Product.ucBase and CloudBeesUCUrlConfiguration.json/.plugins).
+# Dependency-resolution test plugins: build-pipeline-plugin, buildgraph-view, buildresult-trigger.
 plugins:
 - id: antisamy-markup-formatter
 - id: apache-httpcomponents-client-4-api
 - id: artifactory
-  url: "https://trialjqo649.jfrog.io/artifactory/jenkins-plugins-local/artifactory/artifactory.hpi"
-  credentialsId: "jfrog-trial-token"
 - id: asm-api
 - id: authentication-tokens
 - id: aws-credentials
@@ -20,6 +20,9 @@ plugins:
 - id: bootstrap5-api
 - id: bouncycastle-api
 - id: branch-api
+- id: build-pipeline-plugin
+- id: buildgraph-view
+- id: buildresult-trigger
 - id: caffeine-api
 - id: checks-api
 - id: cloudbees-administrative-monitors
