@@ -3,13 +3,20 @@
 # automatically and downloaded through uc-test-proxy -> JFrog mirror (the proxy URLs are set as JVM
 # properties on this controller in the OC bundle: Product.ucBase and CloudBeesUCUrlConfiguration.json/.plugins).
 # Dependency-resolution test plugins: build-pipeline-plugin, buildgraph-view, buildresult-trigger.
+# Three-kinds test (one of each):
+#   - CAP plugin, plain id          : aws-global-configuration (installed from the WAR, no network)
+#   - non-CAP plugin, plain id      : agent-maintenance (+ its dependency flatpickr-api, via proxy + mirror)
+#   - custom plugin, url + credential: Exclusion (downloaded directly from an authenticated JFrog repository;
+#                                      the token is read from a file mounted from a Kubernetes secret)
 plugins:
+- id: agent-maintenance
 - id: antisamy-markup-formatter
 - id: apache-httpcomponents-client-4-api
 - id: artifactory
 - id: asm-api
 - id: authentication-tokens
 - id: aws-credentials
+- id: aws-global-configuration
 - id: aws-java-sdk-ec2
 - id: aws-java-sdk-minimal
 - id: aws-java-sdk2-core
@@ -65,6 +72,9 @@ plugins:
 - id: echarts-api
 - id: eddsa-api
 - id: email-ext
+- id: Exclusion
+  url: "https://trialadf93a.jfrog.io/artifactory/uc-test-custom/plugins/Exclusion/0.15/Exclusion.hpi"
+  credentialsId: "jfrog-test"
 - id: font-awesome-api
 - id: git
 - id: git-client
@@ -152,5 +162,5 @@ plugins:
 - id: workflow-step-api
 - id: workflow-support
 credentials:
-- id: "jfrog-trial-token"
+- id: "jfrog-test"
   token: "${file:/run/secrets/jfrog_trial_token}"
