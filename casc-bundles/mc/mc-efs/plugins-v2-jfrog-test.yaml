@@ -8,6 +8,9 @@
 #   - non-CAP plugin, plain id      : agent-maintenance (+ its dependency flatpickr-api, via proxy + mirror)
 #   - custom plugin, url + credential: Exclusion (downloaded directly from an authenticated JFrog repository;
 #                                      the token is read from a file mounted from a Kubernetes secret)
+# Custom plugin WITH dependencies: performance-signature-dynatrace (same JFrog repository + credential).
+#   Its dependency chain is NOT listed here and must be discovered automatically:
+#   performance-signature-ui -> bootstrap4-api -> popper-api (non-CAP, via proxy + mirror), data-tables-api (CAP, from the WAR).
 plugins:
 - id: agent-maintenance
 - id: antisamy-markup-formatter
@@ -125,6 +128,9 @@ plugins:
 - id: operations-center-client
 - id: operations-center-cloud
 - id: operations-center-context
+- id: performance-signature-dynatrace
+  url: "https://trialadf93a.jfrog.io/artifactory/uc-test-custom/plugins/performance-signature-dynatrace/3.2.2/performance-signature-dynatrace.hpi"
+  credentialsId: "jfrog-test"
 - id: pipeline-build-step
 - id: pipeline-groovy-lib
 - id: pipeline-input-step
