@@ -164,7 +164,8 @@ masterprovisioning:
       cjoc\"\
       \ -Dcom.cloudbees.jenkins.plugins.assurance.model.Product.ucBase=http://uc-test-proxy.cloudbees-core.svc.cluster.local:8080\
       \ -Dcom.cloudbees.jenkins.cjp.installmanager.casc.plugin.management.CloudBeesUCUrlConfiguration.json=http://uc-test-proxy.cloudbees-core.svc.cluster.local:8080/update-center\
-      \ -Dcom.cloudbees.jenkins.cjp.installmanager.casc.plugin.management.CloudBeesUCUrlConfiguration.plugins=http://uc-test-proxy.cloudbees-core.svc.cluster.local:8080/plugins"
+      \ -Dcom.cloudbees.jenkins.cjp.installmanager.casc.plugin.management.CloudBeesUCUrlConfiguration.plugins=http://uc-test-proxy.cloudbees-core.svc.cluster.local:8080/plugins\
+      \ -Dcbci.globalopts.source=oc-bundle"
     javaOptions: "-XshowSettings:vm -XX:+AlwaysPreTouch -XX:+DisableExplicitGC -XX:+ParallelRefProcEnabled\
       \ -XX:+UseStringDeduplication -XX:+AlwaysActAsServerClassMachine -Dhudson.slaves.NodeProvisioner.initialDelay=0\
       \ -XX:-OmitStackTraceInFastThrow"
