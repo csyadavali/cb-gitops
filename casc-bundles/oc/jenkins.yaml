@@ -156,12 +156,15 @@ masterprovisioning:
     cpus: "1.0"
     disk: 50
     fsGroup: "1000"
-    globalJavaOptions: "-Dorg.csanchez.jenkins.plugins.kubernetes.pipeline.PodTemplateStepExecution.defaultImage=cloudbees/cloudbees-core-agent:2.555.3.36985\
+    globalJavaOptions: "-Dorg.csanchez.jenkins.plugins.kubernetes.pipeline.PodTemplateStepExecution.defaultImage=cloudbees/cloudbees-core-agent:2.568.3.37913\
       \ -Dcom.cloudbees.jenkins.plugins.kube.ServiceAccountFilter.defaultServiceAccount=jenkins-agents\
       \ -Dcom.cloudbees.networking.useSubdomain=true -Dcom.cloudbees.networking.protocol=\"\
       https\" -Dcom.cloudbees.networking.hostname=\"aws.syadavali.ps.beescloud.com\"\
       \ -Dcom.cloudbees.networking.port=443 -Dcom.cloudbees.networking.operationsCenterName=\"\
-      cjoc\""
+      cjoc\"\
+      \ -Dcom.cloudbees.jenkins.plugins.assurance.model.Product.ucBase=http://uc-test-proxy.cloudbees-core.svc.cluster.local:8080\
+      \ -Dcom.cloudbees.jenkins.cjp.installmanager.casc.plugin.management.CloudBeesUCUrlConfiguration.json=http://uc-test-proxy.cloudbees-core.svc.cluster.local:8080/update-center\
+      \ -Dcom.cloudbees.jenkins.cjp.installmanager.casc.plugin.management.CloudBeesUCUrlConfiguration.plugins=http://uc-test-proxy.cloudbees-core.svc.cluster.local:8080/plugins"
     javaOptions: "-XshowSettings:vm -XX:+AlwaysPreTouch -XX:+DisableExplicitGC -XX:+ParallelRefProcEnabled\
       \ -XX:+UseStringDeduplication -XX:+AlwaysActAsServerClassMachine -Dhudson.slaves.NodeProvisioner.initialDelay=0\
       \ -XX:-OmitStackTraceInFastThrow"
