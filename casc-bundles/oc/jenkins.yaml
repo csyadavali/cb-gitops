@@ -181,6 +181,7 @@ masterprovisioning:
     startupPeriodSeconds: 10
     startupTimeoutSeconds: 5
     terminationGracePeriodSeconds: 30
+    yaml: ""
 kube:
   podTemplatesConfiguration: {
     }
