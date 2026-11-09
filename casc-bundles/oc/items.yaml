@@ -41,6 +41,9 @@ items:
             spec:
               containers:
               - name: jenkins
+                envFrom:
+                - secretRef:
+                    name: demo-mc-efs-secrets
                 volumeMounts:
                 - name: jfrog-trial-token
                   mountPath: /run/secrets/jfrog_trial_token
