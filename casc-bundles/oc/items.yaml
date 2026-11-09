@@ -36,7 +36,7 @@ items:
         -XX:-OmitStackTraceInFastThrow
       yaml: |
         apiVersion: apps/v1
-        kind: Deployment
+        kind: ${workloadKind}
         spec:
           template:
             spec:
@@ -44,7 +44,7 @@ items:
               - name: jenkins
                 envFrom:
                 - secretRef:
-                    name: demo-mc-efs-secrets
+                    name: ${name}-secrets
                 volumeMounts:
                 - name: jfrog-trial-token
                   mountPath: /run/secrets/jfrog_trial_token

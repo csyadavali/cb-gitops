@@ -183,7 +183,7 @@ masterprovisioning:
     terminationGracePeriodSeconds: 30
     yaml: |
       apiVersion: apps/v1
-      kind: Deployment
+      kind: ^${workloadKind}
       spec:
         template:
           spec:
@@ -191,7 +191,8 @@ masterprovisioning:
             - name: jenkins
               envFrom:
               - secretRef:
-                  name: demo-shared-secrets
+                  name: ^${name}-secrets
+                  optional: true
 kube:
   podTemplatesConfiguration: {
     }
