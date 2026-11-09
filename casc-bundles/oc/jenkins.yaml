@@ -181,7 +181,17 @@ masterprovisioning:
     startupPeriodSeconds: 10
     startupTimeoutSeconds: 5
     terminationGracePeriodSeconds: 30
-    yaml: ""
+    yaml: |
+      apiVersion: apps/v1
+      kind: Deployment
+      spec:
+        template:
+          spec:
+            containers:
+            - name: jenkins
+              envFrom:
+              - secretRef:
+                  name: demo-shared-secrets
 kube:
   podTemplatesConfiguration: {
     }
