@@ -52,10 +52,17 @@ items:
                   mountPath: /run/secrets/jfrog_trial_token
                   subPath: jfrog_trial_token
                   readOnly: true
+                - name: casc-secrets-properties
+                  mountPath: /run/secrets/secrets.properties
+                  subPath: secrets.properties
+                  readOnly: true
               volumes:
               - name: jfrog-trial-token
                 secret:
                   secretName: jfrog-trial-token
+              - name: casc-secrets-properties
+                secret:
+                  secretName: ${name}-casc-secrets
   description: ''
   displayName: mc-efs
   properties:
