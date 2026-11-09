@@ -35,23 +35,16 @@ items:
         -XX:+UseStringDeduplication -XX:+AlwaysActAsServerClassMachine -Dhudson.slaves.NodeProvisioner.initialDelay=0
         -XX:-OmitStackTraceInFastThrow
       yaml: |
+        apiVersion: apps/v1
         kind: Deployment
         spec:
           template:
             spec:
               containers:
               - name: jenkins
-                env:
-                - name: SHARED_TOKEN
-                  valueFrom:
-                    secretKeyRef:
-                      name: demo-mc-efs-secrets
-                      key: SHARED_TOKEN
-                - name: EFS_ONLY
-                  valueFrom:
-                    secretKeyRef:
-                      name: demo-mc-efs-secrets
-                      key: EFS_ONLY
+                envFrom:
+                - secretRef:
+                    name: demo-mc-efs-secrets
                 volumeMounts:
                 - name: jfrog-trial-token
                   mountPath: /run/secrets/jfrog_trial_token
