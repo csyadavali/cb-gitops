@@ -148,3 +148,43 @@ items:
       optOut: false
   - configurationAsCode:
       bundle: main/mc-efs
+- kind: managedController
+  name: mc-test
+  configuration:
+    kubernetes:
+      allowExternalAgents: false
+      terminationGracePeriodSeconds: 30
+      image: CloudBees CI - Managed Controller - 2.555.3.36985
+      memory: 2000
+      startupPeriodSeconds: 10
+      fsGroup: '1000'
+      cpus: 1.0
+      readinessTimeoutSeconds: 5
+      startupFailureThreshold: 100
+      livenessInitialDelaySeconds: 0
+      readinessInitialDelaySeconds: 0
+      clusterEndpointId: default
+      disk: 5
+      readinessFailureThreshold: 3
+      livenessTimeoutSeconds: 10
+      storageClassName: efs-sc
+      domain: mc-test
+      livenessPeriodSeconds: 10
+      startupTimeoutSeconds: 5
+      startupInitialDelaySeconds: 30
+      # no yaml: here on purpose, so the controller inherits the global provisioning yaml
+  description: ''
+  displayName: mc-test
+  properties:
+  - customWebhookData: {}
+  - sharedHeaderLabelOptIn:
+      optIn: true
+  - healthReporting:
+      enabled: true
+  - owner:
+      delay: 5
+      owners: ''
+  - envelopeExtension:
+      allowExceptions: false
+  - sharedConfigurationOptOut:
+      optOut: false
