@@ -191,10 +191,79 @@ masterprovisioning:
             - name: jenkins
               envFrom:
               - secretRef:
-                  name: demo-shared-secrets
+                  name: shared-secrets
+                  optional: true
               - secretRef:
                   name: ^${name}-secrets
                   optional: true
+              volumeMounts:
+              - name: shared-store
+                mountPath: /mnt/shared-store
+                readOnly: true
+              - name: controller-store
+                mountPath: /mnt/controller-store
+                readOnly: true
+            volumes:
+            - name: shared-store
+              csi:
+                driver: secrets-store.csi.k8s.io
+                readOnly: true
+                volumeAttributes:
+                  secretProviderClass: shared-sm
+            - name: controller-store
+              csi:
+                driver: secrets-store.csi.k8s.io
+                readOnly: true
+                volumeAttributes:
+                  secretProviderClass: ^${name}-sm
+      ---
+      apiVersion: secrets-store.csi.x-k8s.io/v1
+      kind: SecretProviderClass
+      metadata:
+        name: shared-sm
+      spec:
+        provider: aws
+        parameters:
+          region: us-east-1
+          usePodIdentity: "true"
+          objects: |
+            - objectName: cbci-test/shared/demo
+              objectType: secretsmanager
+              jmesPath:
+                - path: token
+                  objectAlias: sharedToken
+        secretObjects:
+        - secretName: shared-secrets
+          type: Opaque
+          data:
+          - objectName: sharedToken
+            key: SHARED_TOKEN
+      ---
+      apiVersion: secrets-store.csi.x-k8s.io/v1
+      kind: SecretProviderClass
+      metadata:
+        name: ^${name}-sm
+      spec:
+        provider: aws
+        parameters:
+          region: us-east-1
+          usePodIdentity: "true"
+          objects: |
+            - objectName: cbci-test/^${name}/demo
+              objectType: secretsmanager
+              jmesPath:
+                - path: username
+                  objectAlias: ctrlUser
+                - path: password
+                  objectAlias: ctrlPass
+        secretObjects:
+        - secretName: ^${name}-secrets
+          type: Opaque
+          data:
+          - objectName: ctrlUser
+            key: CONTROLLER_USERNAME
+          - objectName: ctrlPass
+            key: CONTROLLER_PASSWORD
 kube:
   podTemplatesConfiguration: {
     }
