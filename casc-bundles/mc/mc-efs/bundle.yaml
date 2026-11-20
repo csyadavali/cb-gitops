@@ -1,6 +1,6 @@
 apiVersion: "2"
 id: "mc-efs"
-description: "mc-efs managed controller configuration (cbci-demo-cone)"
+description: "mc-efs managed controller configuration (cbci-demo-cone) - poll timing test"
 version: "8"
 jcasc:
   - "jenkins.yaml"
